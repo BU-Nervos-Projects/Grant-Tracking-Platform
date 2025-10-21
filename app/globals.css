@@ -1,0 +1,444 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+}
+
+@layer base {
+  :root {
+    --font-sans: var(--font-geist-sans);
+    --font-mono: var(--font-geist-mono);
+    --font-sf-rounded: "SFRounded", ui-rounded, "SF Pro Rounded", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+      Helvetica, Arial, sans-serif;
+
+    /* Updated to use the new dark theme design system colors */
+    --background: 0 0% 9%; /* #181818 - dashboard background */
+    --foreground: 0 0% 90%; /* #E6E6E6 - higher contrast for better readability */
+    --card: 0 0% 15%; /* #262626 - card background */
+    --card-foreground: 0 0% 90%; /* #E6E6E6 */
+    --popover: 0 0% 15%; /* #262626 */
+    --popover-foreground: 0 0% 90%; /* #E6E6E6 */
+    --primary: 187 100% 42%; /* #26C6DA - teal accent */
+    --primary-foreground: 0 0% 100%;
+    --secondary: 0 0% 20%; /* #333333 - lighter for better contrast */
+    --secondary-foreground: 0 0% 90%; /* #E6E6E6 */
+    --muted: 0 0% 15%; /* #262626 - slightly lighter */
+    --muted-foreground: 0 0% 70%; /* #B3B3B3 - better contrast */
+    --accent: 187 100% 42%; /* #26C6DA */
+    --accent-foreground: 0 0% 100%;
+    --destructive: 4 90% 58%; /* #F44336 */
+    --destructive-foreground: 0 0% 100%;
+    --border: 0 0% 25%; /* #404040 - more visible borders */
+    --input: 0 0% 15%; /* #262626 */
+    --ring: 187 100% 42%; /* #26C6DA */
+
+    /* Updated chart colors for dark theme data visualization */
+    --chart-1: 187 100% 42%; /* Primary teal */
+    --chart-2: 291 64% 42%; /* Purple #AB47BC */
+    --chart-3: 122 39% 49%; /* Success green #4CAF50 */
+    --chart-4: 45 100% 51%; /* Warning yellow #FFC107 */
+    --chart-5: 207 90% 54%; /* Info blue #2196F3 */
+
+    --radius: 0.75rem; /* 12px */
+
+    /* Updated sidebar colors for dark theme */
+    --sidebar-background: 0 0% 10%; /* #1a1a1a */
+    --sidebar-foreground: 0 0% 90%; /* #E6E6E6 */
+    --sidebar-primary: 187 100% 42%; /* #26C6DA */
+    --sidebar-primary-foreground: 0 0% 100%;
+    --sidebar-accent: 0 0% 20%; /* #333333 */
+    --sidebar-accent-foreground: 0 0% 90%; /* #E6E6E6 */
+    --sidebar-border: 0 0% 25%; /* #404040 */
+    --sidebar-ring: 187 100% 42%; /* #26C6DA */
+
+    /* Enhanced spacing scale with more granular values */
+    --wui-spacing-xs: 4px;
+    --wui-spacing-s: 8px;
+    --wui-spacing-m: 12px;
+    --wui-spacing-l: 16px;
+    --wui-spacing-xl: 20px;
+    --wui-spacing-2xl: 24px;
+    --wui-spacing-3xl: 32px;
+
+    /* Enhanced border radius scale with consistent calculations */
+    --w3m-border-radius-master: 4px;
+    --wui-border-radius-xs: calc(var(--w3m-border-radius-master) * 1);
+    --wui-border-radius-s: calc(var(--w3m-border-radius-master) * 2);
+    --wui-border-radius-m: calc(var(--w3m-border-radius-master) * 3);
+    --wui-border-radius-l: calc(var(--w3m-border-radius-master) * 4);
+    --wui-border-radius-xl: calc(var(--w3m-border-radius-master) * 5);
+
+    /* Added design system specific colors as CSS custom properties */
+    --ds-success: 122 39% 49%; /* #4CAF50 */
+    --ds-warning: 45 100% 51%; /* #FFC107 */
+    --ds-error: 4 90% 58%; /* #F44336 */
+    --ds-info: 207 90% 54%; /* #2196F3 */
+    --ds-disabled: 0 0% 37%; /* #5E5E5E */
+  }
+
+  .dark {
+    /* Dark theme now uses the same colors as root since we're implementing a dark-first design */
+    --background: 0 0% 9%; /* #181818 */
+    --foreground: 0 0% 90%; /* #E6E6E6 */
+    --card: 0 0% 15%; /* #262626 */
+    --card-foreground: 0 0% 90%; /* #E6E6E6 */
+    --popover: 0 0% 15%; /* #262626 */
+    --popover-foreground: 0 0% 90%; /* #E6E6E6 */
+    --primary: 187 100% 42%; /* #26C6DA */
+    --primary-foreground: 0 0% 100%;
+    --secondary: 0 0% 20%; /* #333333 */
+    --secondary-foreground: 0 0% 90%; /* #E6E6E6 */
+    --muted: 0 0% 15%; /* #262626 */
+    --muted-foreground: 0 0% 70%; /* #B3B3B3 */
+    --accent: 187 100% 42%; /* #26C6DA */
+    --accent-foreground: 0 0% 100%;
+    --destructive: 4 90% 58%; /* #F44336 */
+    --destructive-foreground: 0 0% 100%;
+    --border: 0 0% 25%; /* #404040 */
+    --input: 0 0% 15%; /* #262626 */
+    --ring: 187 100% 42%; /* #26C6DA */
+    --chart-1: 187 100% 42%;
+    --chart-2: 291 64% 42%;
+    --chart-3: 122 39% 49%;
+    --chart-4: 45 100% 51%;
+    --chart-5: 207 90% 54%;
+    --sidebar-background: 0 0% 10%;
+    --sidebar-foreground: 0 0% 90%;
+    --sidebar-primary: 187 100% 42%;
+    --sidebar-primary-foreground: 0 0% 100%;
+    --sidebar-accent: 0 0% 20%;
+    --sidebar-accent-foreground: 0 0% 90%;
+    --sidebar-border: 0 0% 25%;
+    --sidebar-ring: 187 100% 42%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-background text-foreground;
+    /* Added design system typography rules */
+    font-size: 15px; /* Increased from 14px */
+    line-height: 1.5; /* Within recommended 1.4-1.6 range */
+    font-weight: 450; /* Increased from 400 for better readability */
+  }
+
+  /* Added design system typography scale */
+  h1 {
+    font-size: 28px; /* Increased from 24px */
+    font-weight: 600;
+    line-height: 1.3; /* Slightly more generous */
+  }
+
+  h2 {
+    font-size: 22px; /* Increased from 20px */
+    font-weight: 550; /* Slightly heavier */
+    line-height: 1.3;
+  }
+
+  h3 {
+    font-size: 18px;
+    font-weight: 500;
+    line-height: 1.4;
+  }
+
+  .caption {
+    font-size: 13px; /* Increased from 12px */
+    font-weight: 450; /* Increased for better readability */
+    line-height: 1.5;
+  }
+}
+
+/* Updated glass effects to match design system */
+.header-glass {
+  background: hsl(var(--card));
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+  border-bottom: 1px solid hsl(var(--border));
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.3);
+}
+
+.card-glass {
+  background: hsl(var(--card));
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: none; /* Removed harsh borders */
+  border-radius: 8px; /* Updated to 8px as recommended */
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.4); /* Specific shadow from guidelines */
+}
+
+/* Enhanced shake animation with smoother transitions */
+@keyframes w3m-shake {
+  0% {
+    transform: scale(1) rotate(0deg);
+  }
+  20% {
+    transform: scale(1.02) rotate(-1deg);
+  }
+  40% {
+    transform: scale(1.02) rotate(1deg);
+  }
+  60% {
+    transform: scale(1.02) rotate(-1deg);
+  }
+  80% {
+    transform: scale(1.02) rotate(1deg);
+  }
+  100% {
+    transform: scale(1) rotate(0deg);
+  }
+}
+
+@keyframes pulse-glow {
+  0%,
+  100% {
+    box-shadow: 0 0 5px rgba(16, 192, 221, 0.3);
+  }
+  50% {
+    box-shadow: 0 0 20px rgba(16, 192, 221, 0.6), 0 0 30px rgba(16, 192, 221, 0.4);
+  }
+}
+
+@keyframes slide-up {
+  from {
+    transform: translateY(10px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+@keyframes fade-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes marquee {
+  0% {
+    transform: translateX(100%);
+  }
+  100% {
+    transform: translateX(-100%);
+  }
+}
+
+.animate-shake {
+  animation: w3m-shake 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.animate-marquee {
+  animation: marquee 8s linear infinite;
+}
+
+/* Enhanced card hover effects with smooth transitions */
+.card-hover {
+  transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.3s cubic-bezier(0.4, 0, 0.2, 1),
+    background-color 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.card-hover:hover {
+  transform: translateY(-2px);
+  /* Added subtle glow effect for dark mode */
+  background-color: #2e2e2e; /* Specific hover background from guidelines */
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5); /* Enhanced shadow on hover */
+}
+
+.card-hover-enhanced {
+  transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.3s cubic-bezier(0.4, 0, 0.2, 1),
+    background-color 0.2s cubic-bezier(0.4, 0, 0.2, 1), border-color 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.card-hover-enhanced:hover {
+  transform: translateY(-4px) scale(1.02);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.6), 0 0 20px rgba(16, 192, 221, 0.2);
+  background-color: rgba(38, 38, 38, 0.95);
+  border-color: rgba(16, 192, 221, 0.5);
+}
+
+/* Button interaction animations */
+.button-interactive {
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.button-interactive:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(16, 192, 221, 0.3);
+}
+
+.button-interactive:active {
+  transform: translateY(0);
+  transition-duration: 0.1s;
+}
+
+/* Overlay state transitions */
+.overlay-transition {
+  transition: opacity 0.5s ease-in-out, backdrop-filter 0.5s ease-in-out;
+}
+
+.overlay-enter {
+  opacity: 0;
+  backdrop-filter: blur(0px);
+}
+
+.overlay-enter-active {
+  opacity: 1;
+  backdrop-filter: blur(8px);
+}
+
+/* Progress bar animations */
+.progress-animated {
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.progress-animated > div {
+  transition: width 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+  background: linear-gradient(90deg, #10c0dd, #0ea5e9);
+}
+
+/* Badge hover effects */
+.badge-interactive {
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.badge-interactive:hover {
+  transform: scale(1.05);
+  box-shadow: 0 2px 8px rgba(16, 192, 221, 0.3);
+}
+
+/* Stagger animation for lists */
+.stagger-item {
+  animation: slide-up 0.6s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+  opacity: 0;
+}
+
+.stagger-item:nth-child(1) {
+  animation-delay: 0.1s;
+}
+.stagger-item:nth-child(2) {
+  animation-delay: 0.2s;
+}
+.stagger-item:nth-child(3) {
+  animation-delay: 0.3s;
+}
+.stagger-item:nth-child(4) {
+  animation-delay: 0.4s;
+}
+.stagger-item:nth-child(5) {
+  animation-delay: 0.5s;
+}
+
+/* Enhanced focus states */
+.focus-enhanced:focus {
+  outline: none;
+  box-shadow: 0 0 0 2px rgba(16, 192, 221, 0.5);
+  transition: box-shadow 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Added design system component utilities */
+.ds-button-primary {
+  background-color: hsl(var(--primary));
+  color: hsl(var(--primary-foreground));
+  border-radius: 12px;
+  font-weight: 500; /* Increased weight for better visibility */
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.ds-button-primary:hover {
+  background-color: hsl(var(--primary) / 0.9);
+  box-shadow: 0 4px 12px hsl(var(--primary) / 0.3); /* Added glow */
+  transform: translateY(-1px);
+}
+
+.ds-button-secondary {
+  background-color: hsl(var(--secondary));
+  color: hsl(var(--secondary-foreground));
+  border-radius: 12px;
+  font-weight: 500;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.ds-button-secondary:hover {
+  background-color: hsl(var(--secondary) / 0.8);
+  box-shadow: 0 2px 8px hsl(var(--secondary) / 0.4);
+  transform: translateY(-1px);
+}
+
+.ds-table-header {
+  background-color: hsl(var(--muted));
+  color: hsl(var(--foreground));
+}
+
+.ds-table-row:nth-child(even) {
+  background-color: hsl(var(--card));
+}
+
+.ds-table-row:nth-child(odd) {
+  background-color: hsl(var(--muted));
+}
+
+/* Added dashboard card utility class matching guidelines */
+.dashboard-card {
+  background: #262626;
+  border-radius: 8px;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.4);
+  padding: 24px;
+  border: none;
+}
+
+.dashboard-card:hover {
+  background: #2e2e2e;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+}
+
+/* Added subtle interactive state borders for specific use cases */
+.card-interactive-hover:hover {
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.card-success {
+  border: 1px solid #22c55e;
+}
+
+/* Added custom progress bar styling with specific color #10c0dd */
+.progress-bar-custom {
+  background-color: #10c0dd !important;
+}
+
+.progress-bar-custom > div {
+  background-color: #10c0dd !important;
+}
+
+/* Add font utility classes for SFRounded */
+.font-sf-rounded {
+  font-family: var(--font-sf-rounded);
+}
+
+/* Add responsive grid utility matching the design system */
+.responsive-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(min(320px, 100%), 1fr));
+  gap: var(--wui-spacing-2xl);
+}
+
+/* Updated typography utilities to match design system */
+.text-enhanced {
+  letter-spacing: 0.0025em;
+  line-height: 1.5;
+}
+
+.text-body-enhanced {
+  letter-spacing: 0.0015em;
+  line-height: 1.5;
+}
