@@ -36,7 +36,7 @@ function norm(s?: string) {
  *  4) default "pending"
  */
 function pickDisplayStatus(p: Project): string {
-  const ms = norm((p as any).active_milestone_status) // keep type flexible
+  const ms = norm((p as any).active_milestone_status)
   const ps = norm(p.status)
 
   if (ms === "active" || ps === "active") return "active"
@@ -95,9 +95,15 @@ export const ProjectTable = React.memo(function ProjectTable({
           <TableBody>
             {projects.map((project) => {
               const msList = milestonesByProject.get(project.id) ?? []
-              const displayStatus = msList.length
-                ? computeStatusFromMilestones(msList)
-                : pickDisplayStatus(project)
+              const normalizedProjectStatus = norm(project.status)
+
+              // ✅ If backend says "at-risk", always show At Risk
+              const displayStatus =
+                normalizedProjectStatus === "at-risk"
+                  ? "at-risk"
+                  : msList.length
+                    ? computeStatusFromMilestones(msList)
+                    : pickDisplayStatus(project)
 
               return (
                 <TableRow
@@ -112,7 +118,10 @@ export const ProjectTable = React.memo(function ProjectTable({
                   </TableCell>
 
                   <TableCell className="text-muted-foreground max-w-[150px]">
-                    <div className="line-clamp-2" title={project.creator_username || "N/A"}>
+                    <div
+                      className="line-clamp-2"
+                      title={project.creator_username || "N/A"}
+                    >
                       {project.creator_username || "N/A"}
                     </div>
                   </TableCell>
@@ -127,7 +136,9 @@ export const ProjectTable = React.memo(function ProjectTable({
                   </TableCell>
 
                   <TableCell className="text-muted-foreground">
-                    {project.funding_amount ? formatCompactCurrency(project.funding_amount) : "N/A"}
+                    {project.funding_amount
+                      ? formatCompactCurrency(project.funding_amount)
+                      : "N/A"}
                   </TableCell>
 
                   <TableCell className="text-muted-foreground">
@@ -140,7 +151,10 @@ export const ProjectTable = React.memo(function ProjectTable({
                   </TableCell>
 
                   <TableCell>
-                    <ProjectProgress value={project.progress_percentage || 0} showPercentage />
+                    <ProjectProgress
+                      value={project.progress_percentage || 0}
+                      showPercentage
+                    />
                   </TableCell>
                 </TableRow>
               )

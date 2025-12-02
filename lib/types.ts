@@ -3,7 +3,7 @@ export interface Project {
   readonly id: number
   readonly name: string
   readonly description: string
-  readonly status: "active" | "completed" | "on-hold"
+  readonly status: "active" | "completed" | "on-hold" | 'at-risk'
   readonly github_repo?: string
   readonly discord_channel?: string
   readonly creator_username?: string

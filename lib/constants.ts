@@ -27,8 +27,9 @@ export const LOW_PROGRESS_THRESHOLD = 50
 
 // Currency formatting
 export const CURRENCY_LOCALE = "en-US"
-export const CURRENCY_CODE = "USD"
+export const CURRENCY_CODE = "CKB"
 
+// UI Colors
 export const UI_COLORS = {
   primary: "#10c0dd",
   primaryHover: "#0ea5e9",
@@ -38,6 +39,7 @@ export const UI_COLORS = {
   info: "#2196F3",
 } as const
 
+// UI Spacing
 export const UI_SPACING = {
   xs: "4px",
   s: "8px",
@@ -48,6 +50,7 @@ export const UI_SPACING = {
   "3xl": "32px",
 } as const
 
+// UI Border Radius
 export const UI_BORDER_RADIUS = {
   xs: "4px",
   s: "8px",
@@ -56,6 +59,7 @@ export const UI_BORDER_RADIUS = {
   xl: "20px",
 } as const
 
+// UI Typography
 export const UI_TYPOGRAPHY = {
   fontFamily: "var(--font-sf-rounded)",
   letterSpacingTitle: "0.0025em",

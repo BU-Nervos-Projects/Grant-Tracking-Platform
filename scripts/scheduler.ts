@@ -1,7 +1,6 @@
 import { config } from "@/configs/config";
 import cron from "node-cron";
 
-
 if (!config.serviceBotToken) {
     console.error("[scheduler] Missing SERVICE_BOT_TOKEN");
     process.exit(1);
@@ -23,8 +22,9 @@ async function runRiskScan() {
     }
 }
 
+// run once on start (optional)
 runRiskScan();
 
-// Schedules **02:00 every day** server time.
-cron.schedule("0 2 * * *", runRiskScan, { timezone: "UTC" }); // change timezone if needed
-console.log("[scheduler] Cron set: 0 2 * * * (every day at 2am, UTC). Press Ctrl+C to stop.");
+// run every 1 minute
+cron.schedule("*/1 * * * *", runRiskScan, { timezone: "UTC" });
+console.log("[scheduler] Cron set: */1 * * * * (every 1 minutes). Press Ctrl+C to stop.");

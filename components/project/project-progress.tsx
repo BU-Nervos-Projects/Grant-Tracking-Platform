@@ -1,6 +1,6 @@
 import { Card, CardContent } from "@/components/ui/card"
 import { Progress } from "@/components/ui/progress"
-import { Project } from "@/lib/types"
+import type { Project } from "@/lib/types"
 
 interface ProjectProgressProps {
   project: Project
@@ -23,7 +23,7 @@ export function ProjectProgress({ project }: ProjectProgressProps) {
           </p>
           <p className="text-xs text-muted-foreground">
             {project.funding_amount
-              ? `$${Math.floor(project.funding_amount).toLocaleString("en-US")} allocated`
+              ? `${Math.floor(project.funding_amount).toLocaleString("en-US")} CKB allocated`
               : "Budget TBD"}
           </p>
         </div>

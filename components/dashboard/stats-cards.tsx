@@ -2,8 +2,9 @@
 
 import { memo } from "react"
 import { Card, CardContent } from "@/components/ui/card"
-import { formatCompactCurrency, toNumberSafe } from "@/lib/client-utils"
+import { toNumberSafe } from "@/lib/client-utils"
 import type { Project } from "@/lib/types"
+import { formatCompactCurrency } from "@/lib/utils"
 
 interface StatsCardsProps {
   projects: Project[]

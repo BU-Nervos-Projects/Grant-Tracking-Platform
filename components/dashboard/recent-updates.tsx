@@ -116,9 +116,8 @@ export function RecentUpdates() {
           // safe link fallback (prevents <Link href={null}> crash)
           const projectId = pickProjectId(u)
           const category = getProjectCategoryById(projectsById, projectId) ?? "General"
-          const safeHref =
-            (u.link && typeof u.link === "string" && u.link.trim()) ||
-            (u.id ? `/individual-project?id=${u.id}` : "/")
+          const safeHref = projectId ? `/individual-project?id=${projectId}` : "/"
+
           const content = (
             <Card
               className="bg-card/80 backdrop-blur-sm border-border/50 hover:border-[#1b7382] transition-colors duration-300 group cursor-pointer"

@@ -22,20 +22,20 @@ export function calculateProgress(completedMilestones: number, totalMilestones: 
 export function formatCurrency(amount: number | string | null | undefined): string {
   const numAmount = typeof amount === "string" ? Number.parseFloat(amount) : Number(amount)
   if (isNaN(numAmount) || numAmount === null || numAmount === undefined) {
-    return "$0"
+    return "0 CKB"
   }
-  return `$${Math.floor(numAmount).toLocaleString("en-US")}`
+  return `${Math.floor(numAmount).toLocaleString("en-US")} CKB`
 }
 
 export function formatCompactCurrency(amount: number | string | null | undefined): string {
   const numAmount = typeof amount === "string" ? Number.parseFloat(amount) : Number(amount)
   if (isNaN(numAmount) || numAmount === null || numAmount === undefined) {
-    return "$0"
+    return "0 CKB"
   }
-  if (numAmount >= 1_000_000_000) return `$${(numAmount / 1_000_000_000).toFixed(1)}B`
-  if (numAmount >= 1_000_000) return `$${(numAmount / 1_000_000).toFixed(1)}M`
-  if (numAmount >= 1_000) return `$${(numAmount / 1_000).toFixed(0)}K`
-  return `$${numAmount.toFixed(0)}`
+  if (numAmount >= 1_000_000_000) return `${(numAmount / 1_000_000_000).toFixed(1)}B CKB`
+  if (numAmount >= 1_000_000) return `${(numAmount / 1_000_000).toFixed(1)}M CKB`
+  if (numAmount >= 1_000) return `${(numAmount / 1_000).toFixed(0)}K CKB`
+  return `${numAmount.toFixed(0)} CKB`
 }
 
 /**
@@ -74,14 +74,23 @@ export function getStatusColor(status: string): string {
       return "bg-gray-900 text-gray-100"
     case "not started":
       return "bg-orange-900 text-orange-100"
+
+    // ✅ NEW: At Risk
+    case "at risk":
+      return "bg-red-900 text-red-100"
+
     default:
       return "bg-gray-900 text-gray-100"
   }
 }
 
+
 function normStatus(s?: string) {
   if (!s) return ""
-  return s.trim().toLowerCase().replace(/[_\s]+/g, "-")
+  return s
+    .trim()
+    .toLowerCase()
+    .replace(/[_\s]+/g, "-")
 }
 
 export function sortProjects(projects: any[], sortOrder: string) {
@@ -90,8 +99,7 @@ export function sortProjects(projects: any[], sortOrder: string) {
   if (sortOrder === "overdue") {
     filteredProjects = filteredProjects.filter((project) => {
       const hasOverdueStatus =
-        normStatus(project.status) === "overdue" ||
-        normStatus(project.active_milestone_status) === "overdue"
+        normStatus(project.status) === "overdue" || normStatus(project.active_milestone_status) === "overdue"
 
       let isPastEndDate = false
       if (project.end_date) {
@@ -124,7 +132,6 @@ export function sortProjects(projects: any[], sortOrder: string) {
     }
   })
 }
-
 
 export function paginateItems<T>(items: T[], currentPage: number, itemsPerPage: number) {
   const totalPages = Math.ceil(items.length / itemsPerPage)
@@ -185,8 +192,6 @@ export function shouldShowProgressBar(status: string): boolean {
   const normalized = (status || "").toLowerCase().replace(/[_-]+/g, " ").trim()
   return normalized !== "complete" && normalized !== "completed" && normalized !== "not started"
 }
-
-
 
 export function parseDurationToEndDate(startDate: string | Date, duration: string): Date | null {
   if (!startDate || !duration) return null

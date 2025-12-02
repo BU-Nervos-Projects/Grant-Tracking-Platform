@@ -7,8 +7,7 @@ import { Card, CardContent } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
 import { StatusBadge } from "@/components/ui/status-badge"
 import { ProjectProgress } from "@/components/ui/project-progress"
-import { formatCompactCurrency } from "@/lib/client-utils"
-import { capitalizeStatus } from "@/lib/utils"
+import { capitalizeStatus, formatCompactCurrency } from "@/lib/utils"
 import type { Milestone, Project } from "@/lib/types"
 
 /** Props: pass paginated Projects and the (global or page) Milestones list */
@@ -68,9 +67,17 @@ export const ProjectGrid = React.memo(function ProjectGrid({ projects, milestone
     <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6">
       {projects.map((project) => {
         const msList = milestonesByProject.get(project.id) ?? []
-        const displayStatus = msList.length
-          ? computeStatusFromMilestones(msList)
-          : pickDisplayStatus(project)
+        const normalizedProjectStatus = norm(project.status)
+
+        // If project is at-risk, always show At Risk,
+        // regardless of milestone statuses
+        const displayStatus =
+          normalizedProjectStatus === "at-risk"
+            ? "at-risk"
+            : msList.length
+              ? computeStatusFromMilestones(msList)
+              : pickDisplayStatus(project)
+
 
         return (
           <Card
@@ -114,7 +121,7 @@ export const ProjectGrid = React.memo(function ProjectGrid({ projects, milestone
                 <div className="flex items-center justify-between mb-3">
                   <span className="text-white text-xs md:text-sm" style={{ fontFamily: "var(--font-sf-rounded)" }}>
                     Budget:{" "}
-                    {typeof project.funding_amount === "number"
+                    {project.funding_amount
                       ? formatCompactCurrency(project.funding_amount)
                       : "N/A"}
                   </span>

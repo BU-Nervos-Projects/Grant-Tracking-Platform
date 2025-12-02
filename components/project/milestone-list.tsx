@@ -6,7 +6,7 @@ import { StatusBadge } from "@/components/ui/status-badge"
 import { OverdueAlert } from "@/components/ui/overdue-alert"
 import { ProjectProgress } from "@/components/ui/project-progress"
 import { getOverdueMessage, shouldShowProgressBar, formatDate } from "@/lib/utils"
-import { Milestone } from "@/lib/types"
+import type { Milestone } from "@/lib/types"
 
 interface MilestoneListProps {
   milestones: Milestone[]
@@ -71,7 +71,7 @@ export function MilestoneList({ milestones, onMilestoneClick }: MilestoneListPro
               <p className="text-xs text-muted-foreground font-bold">
                 Budget:{" "}
                 {milestone.budget
-                  ? `$${milestone.budget.toLocaleString("en-US", { maximumFractionDigits: 0 })}`
+                  ? `${milestone.budget.toLocaleString("en-US", { maximumFractionDigits: 0 })} CKB`
                   : "TBD"}
               </p>
               {milestone.status !== "completed" && milestone.due_date && (

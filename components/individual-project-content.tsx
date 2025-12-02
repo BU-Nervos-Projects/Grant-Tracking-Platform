@@ -314,13 +314,46 @@ export default function IndividualProjectContent() {
     return overdueMilestones.sort((a, b) => new Date(a.due_date).getTime() - new Date(b.due_date).getTime())[0]
   }, [milestones])
 
+  const noActivityWarning = useMemo(() => {
+    if (!activity || activity.length === 0) return null
+
+    // find latest activity by timestamp
+    const latest = activity.reduce<Activity | null>((acc, curr) => {
+      if (!acc) return curr
+      const accTime = new Date(acc.timestamp).getTime()
+      const currTime = new Date(curr.timestamp).getTime()
+      if (Number.isNaN(currTime)) return acc
+      if (Number.isNaN(accTime)) return curr
+      return currTime > accTime ? curr : acc
+    }, null)
+
+    if (!latest) return null
+
+    const last = new Date(latest.timestamp)
+    if (Number.isNaN(last.getTime())) return null
+
+    const now = new Date()
+    const diffMs = now.getTime() - last.getTime()
+    const diffDays = Math.ceil(diffMs / (1000 * 60 * 60 * 24))
+
+    if (diffDays < 30) return null
+
+    return {
+      lastTimestamp: latest.timestamp,
+      diffDays,
+    }
+  }, [activity])
+
+
   const handleMilestoneClick = (milestoneId: number) => {
     const milestone = milestones.find((m) => m.id === milestoneId)
     if (milestone) {
       const mappedMilestone = {
         ...milestone,
         status: milestone.status === "completed" ? "complete" : milestone.status,
-        budget: milestone.budget ? `$${milestone.budget.toLocaleString("en-US", { maximumFractionDigits: 0 })}` : "TBD",
+        budget: milestone.budget
+          ? `${milestone.budget.toLocaleString("en-US", { maximumFractionDigits: 0 })} CKB`
+          : "TBD",
         dueDate: milestone.due_date ? formatDate(milestone.due_date) : undefined,
         completionDate: milestone.completion_date ? formatDate(milestone.completion_date) : undefined,
       }
@@ -391,6 +424,21 @@ export default function IndividualProjectContent() {
               </div>
             )
           })()}
+          {(() => {
+            if (!noActivityWarning) return null
+            return (
+              <div className="mb-6">
+                <div className="flex items-center gap-3 bg-orange-900/20 border border-orange-600/30 rounded-lg px-6 py-4">
+                  <span className="text-orange-400 text-xl flex-shrink-0">⚠️</span>
+                  <span className="text-orange-400 font-medium text-base">
+                    No project updates for {noActivityWarning.diffDays} day
+                    {noActivityWarning.diffDays > 1 ? "s" : ""} (since{" "}
+                    {formatDate(noActivityWarning.lastTimestamp)})
+                  </span>
+                </div>
+              </div>
+            )
+          })()}
         </div>
 
         <div className="container mx-auto px-4 md:px-6 py-4 md:py-8">
@@ -448,7 +496,7 @@ export default function IndividualProjectContent() {
                     </p>
                     <p className="text-xs text-muted-foreground">
                       {project.funding_amount
-                        ? `$${project.funding_amount.toLocaleString("en-US", { maximumFractionDigits: 0 })} allocated`
+                        ? `${project.funding_amount.toLocaleString("en-US", { maximumFractionDigits: 0 })} CKB allocated`
                         : "Budget TBD"}
                     </p>
                   </div>
@@ -465,7 +513,7 @@ export default function IndividualProjectContent() {
                     <h3 className="text-sm text-muted-foreground mb-1">Budget</h3>
                     <p className="text-lg md:text-xl font-bold text-white">
                       {project.funding_amount
-                        ? `$${project.funding_amount.toLocaleString("en-US", { maximumFractionDigits: 0 })}`
+                        ? `${project.funding_amount.toLocaleString("en-US", { maximumFractionDigits: 0 })} CKB`
                         : "TBD"}
                     </p>
                   </CardContent>
@@ -661,7 +709,7 @@ export default function IndividualProjectContent() {
                                 <p className="text-xs text-muted-foreground font-bold">
                                   Budget:{" "}
                                   {milestone.budget
-                                    ? `$${milestone.budget.toLocaleString("en-US", { maximumFractionDigits: 0 })}`
+                                    ? `${milestone.budget.toLocaleString("en-US", { maximumFractionDigits: 0 })} CKB`
                                     : "TBD"}
                                 </p>
                                 {milestone.status !== "completed" && milestone.due_date && (
@@ -958,7 +1006,7 @@ export default function IndividualProjectContent() {
                                 <p className="text-xs text-muted-foreground font-bold">
                                   Budget:{" "}
                                   {milestone.budget
-                                    ? `$${milestone.budget.toLocaleString("en-US", { maximumFractionDigits: 0 })}`
+                                    ? `${milestone.budget.toLocaleString("en-US", { maximumFractionDigits: 0 })} CKB`
                                     : "TBD"}
                                 </p>
                                 {milestone.status !== "completed" && milestone.due_date && (

@@ -9,6 +9,7 @@ function ghHeaders() {
   }
 }
 
+
 export async function hasRecentGitHubActivity(repo: string, sinceISO: string): Promise<boolean> {
   if (!config.githubToken || !repo) return false
 
